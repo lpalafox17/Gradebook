@@ -1,0 +1,60 @@
+*
+{  
+    margin: 0;  
+    padding: 0;  
+    background-color:#eef5f8ba;  
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 700;
+
+}  
+.login{  
+        width: 382px;  
+        overflow: hidden;  
+        margin: auto;  
+        margin: 20 0 0 450px;  
+        padding: 80px;  
+        background: #4678b1;  
+        border-radius: 15px ;  
+          
+}  
+h2{  
+    text-align: center;  
+    color: #277582;  
+    padding: 20px;  
+}  
+label{  
+    color: #f9fafa;  
+    font-size: 17px;  
+}  
+#userName{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;  
+}  
+#Password{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;  
+      
+}  
+#log{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+   
+    border-radius: 30px;  
+    padding-left: 7px;  
+    color: black
+  
+  
+}  
+a{  
+    float: right;  
+    background-color: grey; 
+}
