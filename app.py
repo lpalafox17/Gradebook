@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 from flask import Flask, abort, render_template, url_for, request, redirect, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
@@ -119,6 +121,7 @@ def logout():
 
 # register flask-admin with app
 admin = Admin(app)
+
 # create a view of flask-admin according to the database
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(Teacher, db.session))
@@ -127,6 +130,6 @@ admin.add_view(ModelView(Courses, db.session))
 admin.add_view(ModelView(Enrollment, db.session))
 
 if __name__ == "__main__":
-    db.drop_all()
-    db.create_all()
+   #db.drop_all()
+  #  db.create_all()
     app.run(debug = True)
