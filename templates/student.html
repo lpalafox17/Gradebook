@@ -35,30 +35,38 @@
             
             /* Change background color of buttons on hover */
             .tab button:hover {
-              background-color: #ddd;
+                background-color: #ddd;
             }
             
             /* Create an active/current tablink class */
             .tab button.active {
-              background-color: #ccc;
+                background-color: #ccc;
             }
             
             /* Style the tab content */
             .tabcontent {
-              display: none;
-              padding: 6px 12px;
-              border: 1px solid #ccc;
-              border-top: none;
+                display: none;
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                border-top: none;
+            }
+
+            table, th, td {
+                border: 0.5px solid black;
+                /* border-collapse: collapse; */
             }
         </style>
     </head>
 
 
     <body>
-        <h1>Welcome **Student_Name**</h1>
+        <h1>Welcome, {{ student.name }}!</h1>
         <button><a href="{{ url_for('logout') }}">LOGOUT</a></button>
+        <br>
+        <br>
 
 
+        <!-- Tab links -->
         <div class="tab">
             <button class="tablinks" onclick="openStudentCourses(event, 'YourCourses')">Your Courses</button>
             <button class="tablinks" onclick="openAllCourses(event, 'AddCourses')">Add Courses</button>
@@ -107,6 +115,10 @@
 
 
         <script>
+            const xhttp = new XMLHttpRequest();
+            const method = "GET";
+
+
             function openStudentCourses(evt, cityName) {
                 var i, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");
@@ -119,6 +131,8 @@
                 }
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " active";
+
+                getStudentCourses();
             }
 
             function openAllCourses(evt, cityName) {
@@ -133,8 +147,52 @@
                 }
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " active";
+
+                getAllCourses();
             }
+
+            function getStudentCourses() {
+                xhttp.open("GET", url + "/getstudentcourses");
+                xhttp.onload = function() {
+                    data = JSON.parse(this.response);
+                    var output = "";
+                    for (i in data) {
+                        output += "<tr>";
+                        for (k in data[i]) {
+                            output += "<td>" + data[i][k] + "</td>";
+                        }
+                        output += "</tr>"
+                    }
+                    document.getElementById("studentCourses").innerHTML = output;
+                }
+                xhttp.send()
+            }
+
+            function getAllCourses() {
+                xhttp.open("GET", url + "/getallcourses");
+                xhttp.onload = function() {
+                    data = JSON.parse(this.response);
+                    var output = "";
+                    for (i in data){
+                        output += "<tr>";
+                        for(k = 0; j < data[i].length - 1; j++) {
+                            output += "<td>" + data[i][j] + "</td>";
+                        }   
+                        // if (data[i][data[i].length - 1] == 'enrolled') {
+                        //     output += "<td><button onClick=\"drop(" + i +")\">Drop Course</button></td>"
+                        // } else {
+                        //     output += "<td><button onClick=\"enroll(" + i + ")\">Add Course</button></td>"
+                        // }
+                        output += "</tr>"
+                    }
+                    document.getElementById("allCourses").innerHTML = output;
+                }
+                xhttp.send();
+            }
+
+
             </script>
-        <script src="/static/myScript.js"></script>
+
+        <!-- <script src="/static/myScript.js"></script> -->
     </body>
 </html>
