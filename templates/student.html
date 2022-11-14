@@ -56,28 +56,72 @@
 
     <body>
         <h1>Welcome **Student_Name**</h1>
+        <button><a href="{{ url_for('logout') }}">LOGOUT</a></button>
 
 
-        <!-- Tab links -->
         <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'London')">London</button>
-            <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+            <button class="tablinks" onclick="openStudentCourses(event, 'YourCourses')">Your Courses</button>
+            <button class="tablinks" onclick="openAllCourses(event, 'AddCourses')">Add Courses</button>
         </div>
         
         <!-- Tab content -->
-        <div id="London" class="tabcontent">
-            <h3>London</h3>
-            <p>London is the capital city of England.</p>
+        <div id="YourCourses" class="tabcontent">
+            <h3>Your Courses</h3>
+            <p>Your current courses can be found here</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Teacher</th>
+                        <th>Time</th>
+                        <th>Students Enrolled</th>
+                    </tr>
+                </thead>
+                <tbody id="studentCourses">
+
+                </tbody>
+
+            </table>
         </div>
         
-        <div id="Paris" class="tabcontent">
-            <h3>Paris</h3>
-            <p>Paris is the capital of France.</p>
+        <div id="AddCourses" class="tabcontent">
+            <h3>Add Courses</h3>
+            <p>Add courses to your schedule here</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Teacher</th>
+                        <th>Time</th>
+                        <th>Students Enrolled</th>
+                        <th>Add/Drop Courses</th>
+                    </tr>
+                </thead>
+                <tbody id="allCourses">
+
+                </tbody>
+            </table>
         </div>
 
 
         <script>
-            function openCity(evt, cityName) {
+            function openStudentCourses(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+            function openAllCourses(evt, cityName) {
                 var i, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");
                 for (i = 0; i < tabcontent.length; i++) {
@@ -91,7 +135,6 @@
                 evt.currentTarget.className += " active";
             }
             </script>
-
         <script src="/static/myScript.js"></script>
     </body>
 </html>

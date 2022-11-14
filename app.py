@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 from flask import Flask, abort, render_template, url_for, request, redirect, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin, AdminIndexView
@@ -10,12 +12,12 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
+
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite'
 app.config['SECRET_KEY'] = 'secretkey'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
+db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -132,7 +134,7 @@ def login():
                     return redirect('/teacher')
                 else:
                     login_user(user)
-                    return redirect(url_for('admin'))
+                    return redirect(url_for('admin.index'))
     return render_template('login.html', form=form)
 
 
@@ -151,17 +153,17 @@ def logout():
 
 @app.route('/student', methods=['GET', 'POST'])
 def student():
-    # user = current_user.id
-    # studentLogged = Student.query.filter_by(user_id=user).first()
-    # s = studentLogged.id
+    user = current_user.id
+    studentLogged = Student.query.filter_by(user_id=user).first()
+    s = studentLogged.id
     return render_template('student.html')
 
 
 @app.route('/teacher', methods=['GET', 'POST'])
 def teacher():
-    # user = current_user.id
-    # studentLogged = Student.query.filter_by(user_id=user).first()
-    # s = studentLogged.id
+    #user = current_user.id
+    #studentLogged = Student.query.filter_by(user_id=user).first()
+    #s = studentLogged.id
     return render_template('teacher.html')
 
 
