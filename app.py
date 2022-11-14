@@ -137,6 +137,22 @@ def login():
                     return redirect(url_for('admin.index'))
     return render_template('login.html', form=form)
 
+@app.route('/getstudentcourses', methods=['GET'])
+def getStudentCourses():
+    student = Student.query.filter_by(user_id = current_user.id).first()
+    output = db.session.query(Student, Courses, Enrollment)\
+        .filter(Student.id == Enrollment.student_id)\
+        .filter(Courses.id == Enrollment.course_id)\
+        .filter(Student.id == student.id).all()
+    specificStudentCourses = {}
+    for course in output:
+        specificStudentCourses.update({course.Enrollment.id : \
+            (course.Courses.courseName,
+            course.Courses.teacher.name,
+            course.Courses.time,
+            str(course.Courses.enrollNum) + '/' + str(course.Courses.capacity))})
+        return specificStudentCourses
+
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
